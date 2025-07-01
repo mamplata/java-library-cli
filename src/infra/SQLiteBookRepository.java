@@ -52,4 +52,39 @@ public class SQLiteBookRepository implements BookRepository {
         }
         return books;
     }
+    
+    @Override
+    public void addBook(Book book) {
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO books (title, available) VALUES (?, 1)")) {
+            stmt.setString(1, book.getTitle());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void updateBook(Book book) {
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement stmt = conn.prepareStatement("UPDATE books SET title = ? WHERE id = ?")) {
+            stmt.setString(1, book.getTitle());
+            stmt.setInt(2, book.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void deleteBook(int id) {
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM books WHERE id = ?")) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
