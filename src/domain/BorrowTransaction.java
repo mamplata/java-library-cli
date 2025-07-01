@@ -13,5 +13,29 @@ public class BorrowTransaction {
         this.dateBorrowed = dateBorrowed;
     }
 
-    // Getters and toString()
+    public int getId() {
+        return id;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getDateBorrowed() {
+        return dateBorrowed;
+    }
+
+    @Override
+    public String toString() {
+        return "BorrowTransaction{" +
+                "id=" + id +
+                ", bookId=" + bookId +
+                ", userId=" + userId +
+                ", dateBorrowed='" + dateBorrowed + '\'' +
+                '}';
+    }
 }
