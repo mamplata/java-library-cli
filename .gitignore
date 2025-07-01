@@ -1,0 +1,9 @@
+# Ignore compiled class files
+*.class
+
+# Ignore SQLite database file
+library.db
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
