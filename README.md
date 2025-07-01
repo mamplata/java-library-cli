@@ -1,4 +1,4 @@
-### Features Branch for Borrow Functionality
+### Features Branch for Return Functionality
 
 ### Run
 ```bash
@@ -40,7 +40,5 @@ Enter user ID: 1
 ---
 
 ## 📌 Next Feature Branches
-
-* `feature/return-book` – Return functionality
 * `feature/transactions` – Immutable transaction logs
 * `feature/unit-tests` – JUnit test coverage
