@@ -25,6 +25,19 @@ public class SQLiteTransactionRepository implements TransactionRepository {
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 )
             """);
+            
+            // Create return_transactions table
+            stmt.executeUpdate("""
+                CREATE TABLE IF NOT EXISTS return_transactions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    book_id INTEGER NOT NULL,
+                    user_id INTEGER NOT NULL,
+                    date_returned TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (book_id) REFERENCES books(id),
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                )
+            """);
+
 
         } catch (SQLException e) {
             System.out.println("Transaction DB error: " + e.getMessage());
@@ -56,6 +69,33 @@ public class SQLiteTransactionRepository implements TransactionRepository {
             e.printStackTrace();
         }
     }
+    
+    @Override
+    public void recordReturn(int bookId, int userId) {
+        try (Connection conn = DriverManager.getConnection(url)) {
+            conn.setAutoCommit(false);
+    
+            // Insert into return_transactions
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "INSERT INTO return_transactions (book_id, user_id) VALUES (?, ?)")) {
+                stmt.setInt(1, bookId);
+                stmt.setInt(2, userId);
+                stmt.executeUpdate();
+            }
+    
+            // Mark book as available
+            try (PreparedStatement stmt = conn.prepareStatement(
+                    "UPDATE books SET available = 1 WHERE id = ?")) {
+                stmt.setInt(1, bookId);
+                stmt.executeUpdate();
+            }
+    
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public List<BorrowTransaction> getAllTransactions() {

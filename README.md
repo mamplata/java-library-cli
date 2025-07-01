@@ -14,6 +14,7 @@ java -cp "lib/*:out" app.Main
 3. Update book
 4. Delete book
 5. Borrow book
+6. Return book
 0. Exit
 
 Choose option:
@@ -22,10 +23,10 @@ Choose option:
 
 ```
 Example usage:
-Choose option: 5
-Enter book ID to borrow: 2
+Choose option: 6
+Enter book ID to return: 2
 Enter user ID: 1
-📖 Book borrowed!
+📥 Book returned!
 ```
 
 ## 🛠 Tech Stack

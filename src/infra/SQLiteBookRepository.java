@@ -86,5 +86,21 @@ public class SQLiteBookRepository implements BookRepository {
             e.printStackTrace();
         }
     }
+    
+    @Override
+    public Book getBookById(int id) {
+    try (Connection conn = DriverManager.getConnection(url);
+         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM books WHERE id = ?")) {
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return new Book(rs.getInt("id"), rs.getString("title"), rs.getBoolean("available"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
 
 }
