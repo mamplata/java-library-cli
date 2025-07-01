@@ -1,4 +1,4 @@
-### Features Branch for Return Functionality
+### Features Branch for View Transaction Logs Functionality
 
 ### Run
 ```bash
@@ -15,6 +15,7 @@ java -cp "lib/*:out" app.Main
 4. Delete book
 5. Borrow book
 6. Return book
+7. View Transaction Logs
 0. Exit
 
 Choose option:
@@ -23,10 +24,12 @@ Choose option:
 
 ```
 Example usage:
-Choose option: 6
-Enter book ID to return: 2
-Enter user ID: 1
-📥 Book returned!
+Choose option: 7
+📖 Borrow Logs:
+ - [#1] Book ID: 2, User ID: 1, Borrowed: 2025-07-01 09:00:00
+
+📥 Return Logs:
+ - [#1] Book ID: 2, User ID: 1, Returned: 2025-07-01 09:05:00
 ```
 
 ## 🛠 Tech Stack
@@ -40,5 +43,4 @@ Enter user ID: 1
 ---
 
 ## 📌 Next Feature Branches
-* `feature/transactions` – Immutable transaction logs
 * `feature/unit-tests` – JUnit test coverage

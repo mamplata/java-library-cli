@@ -2,6 +2,7 @@ package infra;
 
 import data.TransactionRepository;
 import domain.BorrowTransaction;
+import domain.ReturnTransaction;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -95,15 +96,14 @@ public class SQLiteTransactionRepository implements TransactionRepository {
             e.printStackTrace();
         }
     }
-
-
+    
     @Override
-    public List<BorrowTransaction> getAllTransactions() {
+    public List<BorrowTransaction> getAllBorrowTransactions() {
         List<BorrowTransaction> list = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM borrow_transactions")) {
-
+    
             while (rs.next()) {
                 list.add(new BorrowTransaction(
                         rs.getInt("id"),
@@ -117,4 +117,26 @@ public class SQLiteTransactionRepository implements TransactionRepository {
         }
         return list;
     }
+    
+    @Override
+    public List<ReturnTransaction> getAllReturnTransactions() {
+        List<ReturnTransaction> list = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM return_transactions")) {
+    
+            while (rs.next()) {
+                list.add(new ReturnTransaction(
+                        rs.getInt("id"),
+                        rs.getInt("book_id"),
+                        rs.getInt("user_id"),
+                        rs.getString("date_returned")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

@@ -6,6 +6,7 @@ import infra.SQLiteTransactionRepository;
 import usecase.BookService;
 import usecase.BorrowService;
 import usecase.ReturnService;
+import usecase.TransactionService;
 import data.UserRepository;
 import domain.Book;
 import domain.User;
@@ -23,7 +24,7 @@ public class Main {
         var bookService = new BookService(bookRepo);
         var borrowService = new BorrowService(transactionRepo, bookRepo);
         var returnService = new ReturnService(transactionRepo, bookRepo);
-
+        var transactionService = new TransactionService(new SQLiteTransactionRepository());
 
         Scanner scanner = new Scanner(System.in); // For user input
 
@@ -37,6 +38,7 @@ public class Main {
             System.out.println("4. Delete book");
             System.out.println("5. Borrow book");
             System.out.println("6. Return book");
+            System.out.println("7. View Transaction Logs");
             System.out.println("0. Exit");
             System.out.print("Choose option: ");
             String choice = scanner.nextLine();
@@ -89,7 +91,20 @@ public class Main {
                     boolean success = returnService.returnBook(bookId, userId);
                     System.out.println(success ? "📥 Book returned!" : "❌ Book is already available or doesn't exist.");
                 }
-
+                case "7" -> {
+                    // Return borrow and return logs
+                    System.out.println("📖 Borrow Logs:");
+                    for (var tx : transactionService.getBorrowLogs()) {
+                        System.out.println(" - [#" + tx.getId() + "] Book ID: " + tx.getBookId()
+                                + ", User ID: " + tx.getUserId() + ", Borrowed: " + tx.getDateBorrowed());
+                    }
+                
+                    System.out.println("\n📥 Return Logs:");
+                    for (var tx : transactionService.getReturnLogs()) {
+                        System.out.println(" - [#" + tx.getId() + "] Book ID: " + tx.getBookId()
+                                + ", User ID: " + tx.getUserId() + ", Returned: " + tx.getDateReturned());
+                    }
+                }
                 case "0" -> {
                     // Exit the program
                     System.out.println("👋 Exiting...");
