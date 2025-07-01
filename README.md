@@ -1,4 +1,4 @@
-### Features Branch for Book CRUD Functionality
+### Features Branch for Borrow Functionality
 
 ### Run
 ```bash
@@ -13,6 +13,7 @@ java -cp "lib/*:out" app.Main
 2. Add book
 3. Update book
 4. Delete book
+5. Borrow book
 0. Exit
 
 Choose option:
@@ -21,18 +22,10 @@ Choose option:
 
 ```
 Example usage:
-Choose option: 2
-Enter book title: Java for Beginners
-✅ Book added.
-
-Choose option: 1
-[1] The Hobbit (Available)
-
-[2] 1984 (Available)
-
-[3] Clean Code (Available)
-
-[4] Java for Beginners (Available)
+Choose option: 5
+Enter book ID to borrow: 2
+Enter user ID: 1
+📖 Book borrowed!
 ```
 
 ## 🛠 Tech Stack
@@ -47,7 +40,6 @@ Choose option: 1
 
 ## 📌 Next Feature Branches
 
-* `feature/borrow-book` – Borrow functionality with transaction logging
 * `feature/return-book` – Return functionality
 * `feature/transactions` – Immutable transaction logs
 * `feature/unit-tests` – JUnit test coverage

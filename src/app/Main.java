@@ -2,7 +2,9 @@ package app;
 
 import infra.SQLiteBookRepository;
 import infra.SQLiteUserRepository;
+import infra.SQLiteTransactionRepository;
 import usecase.BookService;
+import usecase.BorrowService;
 import data.UserRepository;
 import domain.Book;
 import domain.User;
@@ -14,7 +16,8 @@ public class Main {
     public static void main(String[] args) {
         // Initialize services
         var bookService = new BookService(new SQLiteBookRepository()); // Handles book-related logic
-        var userRepo = new SQLiteUserRepository(); // Initialized (not used here yet, will be used in future features)
+        var userRepo = new SQLiteUserRepository(); // Handles user-related logic
+        var borrowService = new BorrowService(new SQLiteTransactionRepository()); // Handles borrow-related logic
 
         Scanner scanner = new Scanner(System.in); // For user input
 
@@ -26,6 +29,7 @@ public class Main {
             System.out.println("2. Add book");
             System.out.println("3. Update book");
             System.out.println("4. Delete book");
+            System.out.println("5. Borrow book");
             System.out.println("0. Exit");
             System.out.print("Choose option: ");
             String choice = scanner.nextLine();
@@ -60,6 +64,16 @@ public class Main {
                     bookService.deleteBook(id);
                     System.out.println("🗑 Book deleted.");
                 }
+                case "5" -> {
+                    // Borrow book by ID
+                    System.out.print("Enter book ID to borrow: ");
+                    int bookId = Integer.parseInt(scanner.nextLine());
+                    System.out.print("Enter user ID: ");
+                    int userId = Integer.parseInt(scanner.nextLine());
+                    borrowService.borrowBook(bookId, userId);
+                    System.out.println("📖 Book borrowed!");
+                }
+
                 case "0" -> {
                     // Exit the program
                     System.out.println("👋 Exiting...");
