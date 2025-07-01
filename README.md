@@ -1,46 +1,63 @@
-### Features Branch for View Transaction Logs Functionality
+### Java CLI Library Management System
 
-### Run
+A simple Java command-line Library Management System built using Clean Architecture principles and an SQLite database.
+
+## Features
+
+- 📚 Manage books (add, list, update, delete)
+- 🔄 Borrow and return books
+- 🧾 Immutable transaction logs (borrows and returns)
+- 👤 Predefined users
+- 🧪 Unit tested core logic using JUnit and in-memory SQLite
+
+## Tech Stack
+
+- Java 17+
+- SQLite (via `sqlite-jdbc`)
+- JUnit 5 (Jupiter)
+- Clean Architecture (Domain, Use Case, Infra, App layers)
+
+## Project Structure
+
+```
+
+src/
+├── app            # Main entry point
+├── domain         # Entity models (Book, User, Transaction)
+├── usecase        # Business logic (Services)
+├── data           # Repository interfaces
+├── infra          # SQLite implementations
+test/
+└── usecase        # Unit tests
+
+````
+
+## Setup
+
+### 1. Compile the app
+
 ```bash
-java -cp "lib/*:out" app.Main
+javac -cp "lib/*" -d out $(find src -name "*.java")
+````
+
+### 2. Run the app
+
+```bash
+java -cp "out:lib/*" app.Main
 ```
 
-## 🧪 CLI Menu Example
+### 3. Run tests
 
-```
-📚 Book Menu:
-1. List books
-2. Add book
-3. Update book
-4. Delete book
-5. Borrow book
-6. Return book
-7. View Transaction Logs
-0. Exit
-
-Choose option:
-```
-## 🧪 Output Example
-
-```
-Example usage:
-Choose option: 7
-📖 Borrow Logs:
- - [#1] Book ID: 2, User ID: 1, Borrowed: 2025-07-01 09:00:00
-
-📥 Return Logs:
- - [#1] Book ID: 2, User ID: 1, Returned: 2025-07-01 09:05:00
+```bash
+javac -cp "lib/*:src" -d test-out $(find test -name "*.java")
+java -cp "lib/*:test-out" org.junit.platform.console.ConsoleLauncher   --scan-class-path
 ```
 
-## 🛠 Tech Stack
+## Sample Users
 
-* Java (JDK 11+)
-* SQLite (via JDBC)
-* SLF4J (no-op logging)
-* Clean Architecture principles
-* CLI-based interface
+Currently, users are prepopulated and fixed in code. Book borrowing and returning assumes user context from internal logic.
 
----
+## Notes
 
-## 📌 Next Feature Branches
-* `feature/unit-tests` – JUnit test coverage
+* The test uses `jdbc:sqlite::memory:` with a shared connection to ensure schema persists during test execution.
+* Clean architecture allows you to swap out infra (e.g., use MySQL or file storage) without changing core logic.
