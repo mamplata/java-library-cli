@@ -8,4 +8,5 @@ public interface BookRepository {
     void addBook(Book book);
     void updateBook(Book book);
     void deleteBook(int id);
+    Book getBookById(int id);
 }
